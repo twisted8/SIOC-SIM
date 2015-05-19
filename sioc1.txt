@@ -1,0 +1,798 @@
+// *****************************************************************************
+// * Config_SIOC ver 4.00   -     By Manuel Velez    -    www.opencockpits.com
+// *****************************************************************************
+// * FileName : sioc1.txt
+// * Date : 12/18/2012
+
+
+
+Var 0000, Value 0     // intilialiser
+
+Var 0976, name Lights_ENGINE, static
+{
+  &liteEnginevl = TESTBIT &Lights_ENGINE ,0
+  &liteEnginevr = TESTBIT &Lights_ENGINE ,1
+}
+
+Var 6976, name liteEnginevl, static, Link IOCARD_OUT, Output 29
+
+Var 7976, name liteEnginevr, static, Link IOCARD_OUT, Output 34
+
+Var 0707, name Lights_APU, static
+{
+  &liteAPUrun = TESTBIT &Lights_APU ,0
+  &liteAPUfault = TESTBIT &Lights_APU ,1
+}
+
+Var 6707, name liteAPUrun, Link IOCARD_OUT, Output 30
+
+Var 7707, name liteAPUfault, Link IOCARD_OUT, Output 28
+
+Var 0737, name Lights_B, static
+{
+  &lightsPOS = TESTBIT &Lights_B ,1
+  &lightsRED = TESTBIT &Lights_B ,2
+  &lightsWhite = TESTBIT &Lights_B ,3
+  &lightsTail = TESTBIT &Lights_B ,5
+}
+
+Var 1180, Link IOCARD_OUT, Output 35     // gear
+
+Var 2180, name lightsPOS, Link IOCARD_OUT, Output 14
+
+Var 6181, name lightsRED, Link IOCARD_OUT, Output 17
+
+Var 6182, name lightsWhite, Link IOCARD_OUT, Output 18
+
+Var 6183, name lightsTail, Link IOCARD_OUT, Output 11
+
+Var 9001, name fxLights, Link FSUIPC_OUT, Offset $0D0C, Length 2
+
+Var 0260, name swTAXIlght, static, Link IOCARD_SW, Input 9, Type I
+{
+  &fxLights = CHANGEBIT 3 ,&swTAXIlght
+}
+
+Var 0247, name lightsOVRD, static, Value 1
+
+Var 0261, name swLeftRnwylt, static, Link IOCARD_SW, Input 15, Type I
+
+Var 0262, name swRightRnwylt, static, Link IOCARD_SW, Input 17, Type I
+
+Var 0263, name swLeftLanding, static, Link IOCARD_SW, Input 16, Type I
+{
+  &fxLights = CHANGEBIT 2 ,&swLeftLanding
+}
+
+Var 0264, name swRightLanding, static, Link IOCARD_SW, Input 10, Type I
+
+Var 0265, name swNoseLanding, static, Link IOCARD_SW, Input 11, Type I
+
+Var 0250, name swPOSlght, static, Link IOCARD_SW, Input 2, Type P
+{
+  &fxLights = CHANGEBIT 0 ,&swPOSlght
+  &lightsPOS = TESTBIT &fxLights ,0
+}
+
+Var 0251, name swREDlght, static, Link IOCARD_SW, Input 1, Type P
+{
+  &fxLights = CHANGEBIT 1 ,&swREDlght
+  &lightsRED = TESTBIT &fxLights ,1
+}
+
+Var 0252, name swWHITElght, static, Link IOCARD_SW, Input 0, Type P
+{
+  &fxLights = CHANGEBIT 4 ,&swWHITElght
+  &lightsWhite = TESTBIT &fxLights ,4
+}
+
+Var 0254, name swTaillght, static, Link IOCARD_SW, Input 7, Type P
+
+Var 0037, name swleftYAW, static, Value 1
+
+Var 0038, name swrightYAW, static, Value 1
+
+Var 0186, static, Value 1
+
+Var 0187, static, Value 1
+
+Var 0188, static, Value 1
+
+Var 0094, static, Value 0
+
+Var 0095, static, Value 0
+
+Var 0096, static, Value 0
+
+Var 0097, static, Value 0
+
+Var 0098, static, Value 0
+
+Var 0100, static, Value 0
+
+Var 0101, static, Value 0
+
+Var 0102, static, Value 0
+
+Var 0103, static, Value 0
+
+Var 0104, static, Value 0
+
+Var 5801, name SWENGINE, Link FSUIPC_OUT, Offset $0892, Length 2     // ENGINE
+
+Var 5802, name SWENGINEOFF, Link IOCARD_SW, Input 25, Type I
+{
+  IF &SWENGINEOFF = 1
+  {
+    &SWENGINE = 0    
+  }
+}
+
+Var 5803, name SWENGINEON, Link IOCARD_SW, Input 24
+{
+  IF &SWENGINEON = 1
+  {
+    &SWENGINE = 2    
+  }
+}
+
+Var 9004, Link IOCARD_SW, Input 18
+{
+  IF V9004 = 1
+  {
+    &SWENGINE = 3    
+  }
+}
+
+Var 9006, Link IOCARD_SW, Input 19, Type I     // start
+{
+  IF V9006 = 1
+  {
+    &SWENGINE = 4    
+  }
+}
+
+Var 0085, static, Value 0
+
+Var 0086, static, Value 0
+
+Var 0087, static, Value 0
+
+Var 2086, name swAPUON, Link IOCARD_SW, Input 22, Type I
+{
+  V0086 = &swAPUON    
+  C0 = &swAPUON = 0
+  C1 = &swAPUSTART = 0
+  IF C0 AND C1
+  {
+    V0085 = 1    
+  }
+  ELSE
+  {
+    V0085 = 0    
+  }
+}
+
+Var 2087, name swAPUSTART, Link IOCARD_SW, Input 21, Type I
+{
+  V0087 = &swAPUSTART    
+  C0 = &swAPUON = 0
+  C1 = &swAPUSTART = 0
+  IF C0 AND C1
+  {
+    V0085 = 1    
+  }
+  ELSE
+  {
+    V0085 = 0    
+  }
+}
+
+Var 0070, name swBattery, static, Link IOCARD_SW, Input 4, Type P
+
+Var 0705, name liteBATTERY, static
+{
+  &ledBATTERYon = TESTBIT &liteBATTERY ,2
+}
+
+Var 6705, name ledBATTERYon, Link IOCARD_OUT, Output 15
+
+Var 1071, name swbatSTDBYoff, Link IOCARD_SW, Input 13, Type I
+{
+  V0071 = &swbatSTDBYoff    
+  C0 = &swbatSTDBYoff = 0
+  C1 = &swbatSTDBYBat = 0
+  IF C0 AND C1
+  {
+    V0072 = 1    
+  }
+  ELSE
+  {
+    V0072 = 0    
+  }
+}
+
+Var 1073, name swbatSTDBYBat, Link IOCARD_SW, Input 12, Type I
+{
+  V0073 = &swbatSTDBYBat    
+  C0 = &swbatSTDBYoff = 0
+  C1 = &swbatSTDBYBat = 0
+  IF C0 AND C1
+  {
+    V0072 = 1    
+  }
+  ELSE
+  {
+    V0072 = 0    
+  }
+}
+
+Var 0071, static, Value 0
+
+Var 0072, static, Value 0
+
+Var 0073, static, Value 0
+
+Var 0075, name swAPUgen, static, Value 0
+
+Var 0077, name swLeftTie, static, Value 0
+
+Var 0078, name swRightTie, static, Value 0
+
+Var 0079, name swLeftUTIL, static, Value 0
+
+Var 0080, name swRightUTIL, static, Value 0
+
+Var 0081, name swLefGEN, static, Value 0
+
+Var 0084, name swRightGEN, static, Value 0
+
+Var 0050, name swLElectPump1, static, Value 0
+
+Var 0051, name swLElectPump2, static, Value 0
+
+Var 0024, name swleftIRUon, static, Value 1
+
+Var 0034, name swRightIRUon, static, Value 1
+
+Var 0029, name swCenterIRUon, static, Value 1
+
+Var 0706, name lightsELECTRIC, static
+{
+  &ledAPUgen = TESTBIT &lightsELECTRIC ,2
+  &leftBUSoff = TESTBIT &lightsELECTRIC ,8
+  &OFFrightGEN = TESTBIT &lightsELECTRIC ,21
+}
+
+Var 6706, name ledAPUgen, Link IOCARD_OUT, Output 13
+
+Var 7706, name leftBUSoff, Link IOCARD_OUT, Output 32
+
+Var 8706, name OFFrightGEN, Link IOCARD_OUT, Output 32
+
+Var 1075, name swAPUSec, Link IOCARD_SW, Input 6, Type P
+{
+  IF &swAPUSec = 1
+  {
+    &swAPUgen = 1    
+    &swLeftTie = 1    
+    &swRightTie = 1    
+    &swLeftUTIL = 1    
+    &swRightUTIL = 1    
+    &swLefGEN = 1    
+    &swRightGEN = 1    
+    &swleftIRUon = 1    
+    &swRightIRUon = 1    
+    &swCenterIRUon = 1    
+  }
+  ELSE
+  {
+    &swAPUgen = 0    
+    &swLeftTie = 0    
+    &swRightTie = 0    
+    &swLeftUTIL = 0    
+    &swRightUTIL = 0    
+    &swLefGEN = 0    
+    &swRightGEN = 0    
+    &swleftIRUon = 1    
+    &swRightIRUon = 1    
+    &swCenterIRUon = 1    
+  }
+}
+
+Var 0703, name lightHYDAULICS, static
+{
+  &ledhydPRESSlt = TESTBIT &lightHYDAULICS ,6
+  &ledhydPRESSrt = TESTBIT &lightHYDAULICS ,9
+  &ledhydON = TESTBIT &lightHYDAULICS ,14
+}
+
+Var 6703, name ledhydPRESSlt, Link IOCARD_OUT, Output 31
+
+Var 8703, name ledhydPRESSrt, Link IOCARD_OUT, Output 31
+
+Var 7703, name ledhydON, Link IOCARD_OUT, Output 16
+
+Var 0053, name swlftDemPUMPof, static, Value 0
+
+Var 0054, name swlftDemPUMPau, static, Value 1
+
+Var 0055, name swlftDemPUMPOn, static, Value 0
+
+Var 0061, name swrgtDemPUMPof, static, Value 0
+
+Var 0062, name swrgtDemPUMPau, static, Value 1
+
+Var 0063, name swrgtDemPUMPOn, static, Value 0
+
+Var 0057, name swcntDemPUMPof, static, Value 0
+
+Var 0058, name swcntDemPUMPau, static, Value 1
+
+Var 0059, name swcntDemPUMPOn, static, Value 0
+
+Var 0117, name swlftAFTPUMP, static, Value 0
+
+Var 0119, name swrgtAFTPUMP, static, Value 0
+
+Var 0120, name swlftFWDPUMP, static, Value 0
+
+Var 0122, name swrgtFWDPUMP, static, Value 0
+
+Var 0123, name swrltCTPUMP, static, Value 0
+
+Var 0124, name swrgtCTDPUMP, static, Value 0
+
+Var 0052, name swRgtHYDPump, static, Value 0
+
+Var 0049, name swLftHYDPump, static, Value 0
+
+Var 0234, name swLisln, static, Value 0
+
+Var 0236, name swRisln, static, Value 0
+
+Var 1076, name fnBefStartEng, Link IOCARD_SW, Input 3, Type P
+{
+  &swlftDemPUMPof = CHANGEBITN 0 ,&swlftDemPUMPof
+  &swlftDemPUMPau = CHANGEBITN 0 ,&swlftDemPUMPau
+  &swrgtDemPUMPof = CHANGEBITN 0 ,&swrgtDemPUMPof
+  &swrgtDemPUMPau = CHANGEBITN 0 ,&swrgtDemPUMPau
+  &swcntDemPUMPof = CHANGEBITN 0 ,&swcntDemPUMPof
+  &swcntDemPUMPau = CHANGEBITN 0 ,&swcntDemPUMPau
+  &swRgtHYDPump = CHANGEBITN 0 ,&swRgtHYDPump
+  &swLftHYDPump = CHANGEBITN 0 ,&swLftHYDPump
+  IF &fnBefStartEng = 1
+  {
+    &swLElectPump1 = 1    
+    &swLElectPump2 = 1    
+    &swRgtHYDPump = 1    
+    &swLftHYDPump = 1    
+  }
+  ELSE
+  {
+    &swLElectPump1 = 0    
+    &swLElectPump2 = 0    
+    &swRgtHYDPump = 0    
+    &swLftHYDPump = 0    
+  }
+}
+
+Var 0715, name lightPUMP, static
+{
+  &ledPUMP = TESTBIT &lightPUMP ,6
+  &ledPUMPpress = TESTBIT &lightPUMP ,2
+}
+
+Var 6715, name ledPUMP, Link IOCARD_OUT, Output 12
+
+Var 7715, name ledPUMPpress, Link IOCARD_OUT, Output 28
+
+Var 1117, name fnFuelPumps, Link IOCARD_SW, Input 8, Type P
+{
+  IF &fnFuelPumps = 1
+  {
+    &swlftAFTPUMP = 1    
+    &swrgtAFTPUMP = 1    
+    &swlftFWDPUMP = 1    
+    &swrgtFWDPUMP = 1    
+    &swrltCTPUMP = 0    
+    &swrgtCTDPUMP = 0    
+    &swLisln = 0    
+    &swRisln = 0    
+  }
+  ELSE
+  {
+    &swlftAFTPUMP = 0    
+    &swrgtAFTPUMP = 0    
+    &swlftFWDPUMP = 0    
+    &swrgtFWDPUMP = 0    
+    &swrltCTPUMP = 0    
+    &swrgtCTDPUMP = 0    
+    &swLisln = 1    
+    &swRisln = 1    
+  }
+}
+
+Var 0733, name liteAC, static
+{
+  &ledPACK = TESTBIT &liteAC ,0
+}
+
+Var 6733, name ledPACK, Link IOCARD_OUT, Output 27
+
+Var 0222, name leftpackoff, static, Value 0     // leftpackoff, 
+
+Var 0223, name leftpackAuto, static, Value 0     // leftpackAuto, 
+
+Var 0224, static, Value 0
+
+Var 0225, static, Value 0
+
+Var 0226, static, Value 0
+
+Var 0228, name rghtpackoff, static, Value 0
+
+Var 0229, name rghtpackAuto, static, Value 0
+
+Var 0230, static, Value 0
+
+Var 0231, static, Value 0
+
+Var 0232, static, Value 0
+
+Var 1222, name packOFF, Link IOCARD_SW, Input 26, Type I
+{
+  &leftpackoff = 1    
+  &rghtpackoff = 1    
+  &leftpackAuto = 0    
+  &rghtpackAuto = 0    
+}
+
+Var 1223, name packON, Link IOCARD_SW, Input 20, Type I
+{
+  &leftpackoff = 0    
+  &rghtpackoff = 0    
+  &leftpackAuto = 1    
+  &rghtpackAuto = 1    
+}
+
+Var 0719, name cabinLights, static
+{
+  &liteCABINfwd = TESTBIT &cabinLights ,0
+  &liteCABINmid = TESTBIT &cabinLights ,1
+  &liteCABINaft = TESTBIT &cabinLights ,2
+}
+
+Var 6719, name liteCABINfwd, Link IOCARD_OUT, Output 20
+
+Var 6720, name liteCABINmid, Link IOCARD_OUT, Output 21
+
+Var 6721, name liteCABINaft, Link IOCARD_OUT, Output 19
+
+Var 0160, name swCABINfwd, static, Link IOCARD_SW, Input 27, Type P
+
+Var 0161, name swCABINmid, static, Link IOCARD_SW, Input 33, Type P
+
+Var 0162, name swCABINaft, static, Link IOCARD_SW, Input 35, Type P
+
+Var 0163, name swCABINalrt, static, Link IOCARD_SW, Input 29, Type P
+
+Var 0164, name swCABINgrn, static, Link IOCARD_SW, Input 28, Type P
+
+Var 0165, name swCABINint, static, Link IOCARD_SW, Input 34, Type P
+
+Var 5101, Link IOCARD_ANALOGIC, Input #2, PosL 73, PosC 154, PosR 235     // AD input 1 for Throttle Left
+{
+  L0 = 30         // reverse%limit
+  IF V5101 >= L0     // normal thrust
+  {
+    L1 = 240 - L0     // offset
+    L1 = 16384 / L1     // // scale
+  }
+  L2 = V5101 - L0     // offset
+  V5013 = L1 * L2
+}
+
+Var 5001, Link USB_ANALOGIC, Device 1, Input 1, PosL 13, PosC 80, PosR 174     // AD input 5 for Throttle Right
+{
+  L0 = 30         // reverse%limit
+  IF V5001 >= L0     // normal thrust
+  {
+    L1 = 240 - L0     // offset
+    L1 = 16384 / L1     // // scale
+  }
+  L2 = V5001 - L0     // offset
+  V5014 = L1 * L2
+}
+
+Var 5111, Link IOCARD_SW, Input 67, Type I     // Thrust reverse switch 1
+{
+  L0 = 30    
+  L1 = 4096 / 25
+  L2 = V5101 - L0
+  V5013 = L1 * L2
+}
+
+Var 6111, Link IOCARD_SW, Input 64, Type I     // Thrust reverse switch 2
+{
+  L0 = 30    
+  L1 = 4096 / 25
+  L2 = V5001 - L0
+  V5014 = L1 * L2
+}
+
+Var 5013, Link FSUIPC_OUT, Offset $088C, Length 2, Value 0     // Throttle 1 Level write
+
+Var 5014, Link FSUIPC_OUT, Offset $0890, Length 2, Value 0     // Throttle 2 Lever write
+
+
+Var 5102, Link IOCARD_ANALOGIC, Input #3, PosL 135, PosC 200, PosR 255     // CARB HEAT
+{
+  L0 = V5102    
+  IF L0 <= 190
+  {
+    L1 = 0    
+  }
+  IF L0 >= 200
+  {
+    L1 = 1    
+  }
+  V5015 = L1    
+}
+
+Var 5015, Link FSUIPC_OUT, Offset $08B2, Length 2, Value 0     // Spoiler Out
+
+Var 5105, Link IOCARD_ANALOGIC, Input #1, PosL 75, PosC 160, PosR 255     // Flaps Input
+{
+  L0 = V5105    
+  L2 = 0    
+  IF L0 <= 20
+  {
+    L1 = 0    
+  }
+  IF L0 >= 21
+  {
+    L2 = 4000    
+  }
+  IF L0 >= 85
+  {
+    L2 = 6020    
+  }
+  IF L0 >= 120
+  {
+    L2 = 9360    
+  }
+  IF L0 >= 175
+  {
+    L2 = 11702    
+  }
+  IF L0 >= 225
+  {
+    L2 = 14042    
+  }
+  IF L0 >= 245
+  {
+    L2 = 16383    
+  }
+  V5016 = L2    
+}
+
+Var 0011, Link USB_STEPPER, Device 1, Output 2, PosL 10, PosC 0, PosR 4, Type H
+
+Var 5016, Link FSUIPC_OUT, Offset $0BDC, Length 2, Value 0     // Flaps Output
+
+
+Var 0012, static, Link FSUIPC_IN, Offset $0BE0, Length 4     // flaps In
+{
+  L0 = V0012    
+  L1 = 0    
+  IF L0 >= 0
+  {
+    L2 = 2.5    
+  }
+  IF L0 > 1638     // 1~5 1638
+  {
+    L2 = L0 / L0
+    L2 = L2 + 0.5
+    L1 = 2000    
+  }
+  IF L0 >= 3948     // 5~15 3948
+  {
+    L2 = L0 / L0
+    L2 = L2 + 0.35
+    L1 = 2500    
+  }
+  IF L0 >= 7895     // 20
+  {
+    L2 = 5.4    
+    L1 = L2 / 5500
+    L1 = L1 + 6300
+  }
+  IF L0 >= 9080     // 25
+  {
+    L2 = 1.35    
+    L1 = 6600    
+  }
+  IF L0 >= 13146     // 30
+  {
+    L2 = 1.35    
+    L1 = 6600    
+  }
+  L0 = L0 * L2
+  V0011 = L0 + L1
+}
+
+Var 5106, Link IOCARD_ANALOGIC, Input #4, PosL 0, PosC 70, PosR 130     // Elevatror Trim
+{
+  L0 = 0         // limit
+  L1 = 130 - L0     // offset 130 - L0     
+  L1 = 16384 / L1     // // scale
+  L1 = L1 - 50     // L1 - 50
+  L2 = V5106 - L0     // offset
+  L0 = L1 * L2
+  L0 = L0 - 8192     // -2500
+  L0 = L0 * 2
+  V5018 = L0    
+}
+
+Var 5018, Link FSUIPC_OUT, Offset $0BC0, Length 2, Value 0     // Elevator Trim Output
+
+Var 0505, name swFUELcutlft, static, Link IOCARD_SW, Input 65, Type I
+
+Var 0506, name swFUELcutrght, static, Link IOCARD_SW, Input 66, Type I
+
+Var 5019, name voPARKING, Link FSUIPC_OUT, Offset $0BC8, Length 2, Value 0     // Parking
+
+Var 5506, name swPARKING, Link IOCARD_SW, Input 63, Type I     // Parking Brake
+{
+  C0 = &swPARKING = 0
+  C1 = &swPARKING = 1
+  IF C1    
+  {
+    &voPARKING = 0    
+  }
+  IF C0    
+  {
+    &voPARKING = 32767    
+  }
+}
+
+Var 0369, name SDKGearOff, static
+
+Var 5020, name voGEAR, Link FSUIPC_OUT, Offset $0BE8, Length 2, Value 0     // GEAR
+
+Var 0368, name ldGEARDown, static, Link IOCARD_SW, Input 61, Type I     // Down
+{
+  C0 = &ldGearUP = 0
+  C1 = &ldGEARDown = 0
+  IF C0 AND C1
+  {
+    &SDKGearOff = 1    
+  }
+  ELSE
+  {
+    &voGEAR = 16383    
+  }
+}
+
+Var 0370, name ldGearUP, static, Link IOCARD_SW, Input 62, Type I     // Up
+{
+  V0073 = &swbatSTDBYBat    
+  C0 = &ldGearUP = 0
+  C1 = &ldGEARDown = 0
+  IF C0 AND C1
+  {
+    &SDKGearOff = 1    
+  }
+  ELSE
+  {
+    &voGEAR = 0    
+  }
+}
+
+Var 5036, static, Link FSUIPC_IN, Offset $0BF4, Length 4     // gear left light
+{
+  L0 = V5036    
+  L1 = 0
+  L2 = 0  
+  IF L0 > 16180
+  {
+    L1 = 1    
+  }
+  ELSE
+  {
+    L1 = 0    
+  }
+  IF L0 > 100
+  {
+  L2 = 1	
+  }
+  IF L0 > 16100
+  {
+  L2 = 0	
+  }
+  &ltgearLeft = L1
+  &ltgearRight = L1
+  &ltgearNose = L1
+  &ltgearGear = L2
+  &ltgearDoors = L2
+}
+
+
+Var 0166, Value 0
+
+Var 0167, Value 0
+
+Var 0168, Value 0
+
+Var 1167, name FO_JoyStick64, Link FSUIPC_OUT, Offset $3340, Length 4
+
+Var 1166, name SeatbeltsOFF, Link IOCARD_SW, Input 30, Type I
+{
+  V0166 = &SeatbeltsOFF    
+  C0 = &SeatbeltsOFF = 0
+  C1 = &SeatbeltsON = 0
+  &FO_JoyStick64 = CHANGEBIT 0 ,&SeatbeltsOFF     // toggle bit 0 of joystick 64
+  IF C0 AND C1
+  {
+    V0167 = 1    
+  }
+  ELSE
+  {
+    V0167 = 0    
+  }
+}
+
+Var 1168, name SeatbeltsON, Link IOCARD_SW, Input 31, Type I
+{
+  V0168 = &SeatbeltsON    
+  C0 = &SeatbeltsOFF = 0
+  C1 = &SeatbeltsON = 0
+  &FO_JoyStick64 = CHANGEBIT 0 ,&SeatbeltsON     // toggle bit 0 of joystick 64
+  IF C0 AND C1
+  {
+    V0167 = 1    
+  }
+  ELSE
+  {
+    V0167 = 0    
+  }
+}
+
+Var 0764, name Lights_GEAR, static
+{
+  &ltgearNose = TESTBIT &Lights_GEAR ,0
+  &ltgearLeft = TESTBIT &Lights_GEAR ,1
+  &ltgearRight = TESTBIT &Lights_GEAR ,2
+  &ltgearGear = TESTBIT &Lights_GEAR ,3
+  &ltgearDoors = TESTBIT &Lights_GEAR ,4
+}
+
+Var 5764, name ltgearNose, Link IOCARD_OUT, Output 35
+
+Var 6764, name ltgearLeft, Link IOCARD_OUT, Output 38
+
+Var 7764, name ltgearRight, Link IOCARD_OUT, Output 36
+
+Var 8764, name ltgearGear, Link IOCARD_OUT, Output 40
+
+Var 9764, name ltgearDoors, Link IOCARD_OUT, Output 39
+
+Var 1169, name FO_JoyStick642, Link FSUIPC_OUT, Offset $3341, Length 4
+
+Var 1170, name WXoN, Link IOCARD_SW, Input 34, Type I
+{
+  &FO_JoyStick642 = CHANGEBIT 0 ,&WXoN     // toggle bit 0 of joystick 64
+}
+
+Var 0016, Link FSUIPC_IN, Offset $02CC, Length 8, Numbers 1     // Compass
+{
+  L0 = V0016 + 240     // we add 146 degrees.
+  IF L0 > 36000     // We don’t want to exceed 360º
+  {
+    L0 = L0 - 3600     // We correct the value in this case.
+  }
+  V0017 = L0 * 10     // We send the value to the motor controlle
+}
+
+Var 0017, Link USB_STEPPER, Device 1, Output 3, PosL 20, PosC 0, PosR 4, Type H
