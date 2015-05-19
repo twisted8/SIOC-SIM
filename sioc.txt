@@ -444,9 +444,9 @@ Var 0733, name liteAC, static
 
 Var 6733, name ledPACK, Link IOCARD_OUT, Output 27
 
-Var 0222, name leftpackoff, static, Value 0     // leftpackoff, 
+Var 0222, name leftpackoff, static, Value 0     // leftpack off, 
 
-Var 0223, name leftpackAuto, static, Value 0     // leftpackAuto, 
+Var 0223, name leftpackAuto, static, Value 0     // leftpack Auto, 
 
 Var 0224, static, Value 0
 
