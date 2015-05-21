@@ -419,8 +419,8 @@ Var 1117, name fnFuelPumps, Link IOCARD_SW, Input 8, Type P
     &swrgtAFTPUMP = 1    
     &swlftFWDPUMP = 1    
     &swrgtFWDPUMP = 1    
-    &swrltCTPUMP = 0    
-    &swrgtCTDPUMP = 0    
+    &swrltCTPUMP = 1    
+    &swrgtCTDPUMP = 1    
     &swLisln = 0    
     &swRisln = 0    
   }
