@@ -1,12 +1,9 @@
 // *****************************************************************************
-// * Config_SIOC ver 4.00   -     By Manuel Velez    -    www.opencockpits.com
+// * Config_SIOC ver 4.5   -     By Manuel Velez    -    www.opencockpits.com
 // *****************************************************************************
 // * FileName : sioc.txt
-// * Date : 4/19/2015
+// * Date : 4/8/2016
 
-
-
-Var 0000, Value 0     // intilialiser
 
 Var 0976, name Lights_ENGINE, static
 {
@@ -146,7 +143,7 @@ Var 1095, name EnginelftAUT, Link IOCARD_SW, Input 19, Type I
   }
 }
 
-Var 1100, name EnginergtGND, Link IOCARD_SW, Input 24, Type I
+Var 1100, name EnginergtGND, Link IOCARD_SW, Input 30, Type I
 {
   V0100 = &EnginergtGND    
   C0 = &EnginergtGND = 0
@@ -161,7 +158,7 @@ Var 1100, name EnginergtGND, Link IOCARD_SW, Input 24, Type I
   }
 }
 
-Var 1101, name EnginergtAUT, Link IOCARD_SW, Input 18, Type I
+Var 1101, name EnginergtAUT, Link IOCARD_SW, Input 31, Type I
 {
   V0101 = &EnginergtAUT    
   C0 = &EnginergtGND = 0
@@ -598,7 +595,7 @@ Var 0168, Value 0
 
 Var 1167, name FO_JoyStick64, Link FSUIPC_OUT, Offset $3340, Length 4
 
-Var 1166, name SeatbeltsOFF, Link IOCARD_SW, Input 30, Type I
+Var 1166, name SeatbeltsOFF, Link IOCARD_SW, Input 130, Type I
 {
   V0166 = &SeatbeltsOFF    
   C0 = &SeatbeltsOFF = 0
@@ -614,7 +611,7 @@ Var 1166, name SeatbeltsOFF, Link IOCARD_SW, Input 30, Type I
   }
 }
 
-Var 1168, name SeatbeltsON, Link IOCARD_SW, Input 31, Type I
+Var 1168, name SeatbeltsON, Link IOCARD_SW, Input 131, Type I
 {
   V0168 = &SeatbeltsON    
   C0 = &SeatbeltsOFF = 0
@@ -678,7 +675,7 @@ Var 6771, name liteFMCMSG, static, Link IOCARD_OUT, Output 23
 
 Var 7771, name liteFMCEXEC, static, Link IOCARD_OUT, Output 22
 
-Var 6000, name Key, static, Link USB_KEYS
+Var 6000, name Key, static, Link USB_KEYS Device 4
 {
   IF &Key <> 0
   {
@@ -1039,142 +1036,74 @@ Var 6000, name Key, static, Link USB_KEYS
   }
 }
 
-Var 0387, name LSKL1, static
-
-Var 0388, name LSKL2, static
-
-Var 0389, name LSKL3, static
-
-Var 0390, name LSKL4, static
-
-Var 0391, name LSKL5, static
-
-Var 0392, name LSKL6, static
-
-Var 0393, name LSKR1, static
-
-Var 0394, name LSKR2, static
-
-Var 0395, name LSKR3, static
-
-Var 0396, name LSKR4, static
-
-Var 0397, name LSKR5, static
-
-Var 0398, name LSKR6, static
-
-Var 0399, name INIT_REF, static
-
-Var 0400, name RTE, static
-
-Var 0401, name DEP_ARR, static
-
-Var 0402, name ATC, static
-
-Var 0403, name VNAV, static
-
-Var 0404, name FIX, static
-
-Var 0405, name LEGS, static
-
-Var 0406, name HOLD, static
-
-Var 0407, name FMC_COMM, static
-
-Var 0408, name PROG, static
-
-Var 0409, name EXEC, static
-
-Var 0410, name MENU, static
-
-Var 0411, name NAV_RAD, static
-
-Var 0412, name PREV_PAGE, static
-
-Var 0413, name NEXT_PAGE, static
-
-Var 0414, name LET_A, static
-
-Var 0415, name LET_B, static
-
-Var 0416, name LET_C, static
-
-Var 0417, name LET_D, static
-
-Var 0418, name LET_E, static
-
-Var 0419, name LET_F, static
-
-Var 0420, name LET_G, static
-
-Var 0421, name LET_H, static
-
-Var 0422, name LET_I, static
-
-Var 0423, name LET_J, static
-
-Var 0424, name LET_K, static
-
-Var 0425, name LET_L, static
-
-Var 0426, name LET_M, static
-
-Var 0427, name LET_N, static
-
-Var 0428, name LET_O, static
-
-Var 0429, name LET_P, static
-
-Var 0430, name LET_Q, static
-
-Var 0431, name LET_R, static
-
-Var 0432, name LET_S, static
-
-Var 0433, name LET_T, static
-
-Var 0434, name LET_U, static
-
-Var 0435, name LET_V, static
-
-Var 0436, name LET_W, static
-
-Var 0437, name LET_X, static
-
-Var 0438, name LET_Y, static
-
-Var 0439, name LET_Z, static
-
-Var 0440, name LET_SP, static
-
-Var 0441, name LET_DEL, static
-
-Var 0442, name LET_SLASH, static
-
-Var 0443, name LET_CLR, static
-
-Var 0444, name NUM_1, static
-
-Var 0445, name NUM_2, static
-
-Var 0446, name NUM_3, static
-
-Var 0447, name NUM_4, static
-
-Var 0448, name NUM_5, static
-
-Var 0449, name NUM_6, static
-
-Var 0450, name NUM_7, static
-
-Var 0451, name NUM_8, static
-
-Var 0452, name NUM_9, static
-
-Var 0454, name NUM_0, static
-
-Var 0453, name NUM_DP, static
-
-Var 0455, name PLUS_MINUS, static
-
-
+Var 387 Static name LSKL1 
+Var 388 Static name LSKL2 
+Var 389 Static name LSKL3 
+Var 390 Static name LSKL4 
+Var 391 Static name LSKL5 
+Var 392 Static name LSKL6 
+Var 393 Static name LSKR1 
+Var 394 Static name LSKR2 
+Var 395 Static name LSKR3 
+Var 396 Static name LSKR4 
+Var 397 Static name LSKR5 
+Var 398 Static name LSKR6 
+Var 399 Static name INIT_REF 
+Var 400 Static name RTE 
+Var 401 Static name DEP_ARR 
+Var 402 Static name ATC 
+Var 403 Static name VNAV 
+Var 404 Static name FIX 
+Var 405 Static name LEGS 
+Var 406 Static name HOLD 
+Var 407 Static name FMC_COMM 
+Var 408 Static name PROG 
+Var 409 Static name EXEC 
+Var 410 Static name MENU 
+Var 411 Static name NAV_RAD 
+Var 412 Static name PREV_PAGE 
+Var 413 Static name NEXT_PAGE 
+
+Var 414 Static name LET_A 
+Var 415 Static name LET_B 
+Var 416 Static name LET_C 
+Var 417 Static name LET_D 
+Var 418 Static name LET_E 
+Var 419 Static name LET_F 
+Var 420 Static name LET_G 
+Var 421 Static name LET_H 
+Var 422 Static name LET_I 
+Var 423 Static name LET_J 
+Var 424 Static name LET_K 
+Var 425 Static name LET_L 
+Var 426 Static name LET_M 
+Var 427 Static name LET_N 
+Var 428 Static name LET_O 
+Var 429 Static name LET_P 
+Var 430 Static name LET_Q 
+Var 431 Static name LET_R 
+Var 432 Static name LET_S 
+Var 433 Static name LET_T 
+Var 434 Static name LET_U 
+Var 435 Static name LET_V 
+Var 436 Static name LET_W 
+Var 437 Static name LET_X 
+Var 438 Static name LET_Y 
+Var 439 Static name LET_Z 
+Var 440 Static name LET_SP 
+Var 441 Static name LET_DEL 
+Var 442 Static name LET_SLASH 
+Var 443 Static name LET_CLR 
+
+Var 444 Static name NUM_1 
+Var 445 Static name NUM_2 
+Var 446 Static name NUM_3 
+Var 447 Static name NUM_4 
+Var 448 Static name NUM_5 
+Var 449 Static name NUM_6 
+Var 450 Static name NUM_7 
+Var 451 Static name NUM_8 
+Var 452 Static name NUM_9 
+Var 453 Static name NUM_DP 
+Var 454 Static name NUM_0 
+Var 455 Static name PLUS_MINUS
