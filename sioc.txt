@@ -150,26 +150,27 @@ Var 1100, name EnginergtGND, Link IOCARD_SW, Input 30, Type I
   C1 = &EnginergtAUT = 0
   IF C0 AND C1
   {
-    V0102 = 1    
+    V0101 = 1    
   }
   ELSE
   {
-    V0102 = 0    
+    V0101 = 0
   }
 }
 
+// using off instead of aut with temp switch
 Var 1101, name EnginergtAUT, Link IOCARD_SW, Input 31, Type I
 {
-  V0101 = &EnginergtAUT    
+  V0102 = &EnginergtAUT    
   C0 = &EnginergtGND = 0
   C1 = &EnginergtAUT = 0
   IF C0 AND C1
   {
-    V0102 = 1    
+    V0101 = 1
   }
   ELSE
   {
-    V0102 = 0    
+    V0101 = 0
   }
 }
 
@@ -209,16 +210,21 @@ Var 2087, name swAPUSTART, Link IOCARD_SW, Input 21, Type I
   }
 }
 
-Var 0070, name swBattery, static, Link IOCARD_SW, Input 4, Type P
+//Battery
+Var 70, name swBattery, static, Link IOCARD_SW, Input 4, Type P
 
-Var 0705, name liteBATTERY, static
+Var 830, name liteBATTERY, static
 {
-  &ledBATTERYon = TESTBIT &liteBATTERY ,2
+  &ledBATTERYon = TESTBIT &liteBATTERY ,0
 }
 
-Var 6705, name ledBATTERYon, Link IOCARD_OUT, Output 15
+Var 6830, name ledBATTERYon, Link IOCARD_OUT, Output 15
 
-Var 1071, name swbatSTDBYoff, Link IOCARD_SW, Input 13, Type I
+// Standby power - Auto
+Var 0072, static, Value 1
+
+// Standby power - Off
+Var 1071, name swbatSTDBYoff, Link IOCARD_SW, Input 12, Type I
 {
   V0071 = &swbatSTDBYoff    
   C0 = &swbatSTDBYoff = 0
@@ -233,7 +239,8 @@ Var 1071, name swbatSTDBYoff, Link IOCARD_SW, Input 13, Type I
   }
 }
 
-Var 1073, name swbatSTDBYBat, Link IOCARD_SW, Input 12, Type I
+// Standby power - Batery
+Var 1073, name swbatSTDBYBat, Link IOCARD_SW, Input 13, Type I
 {
   V0073 = &swbatSTDBYBat    
   C0 = &swbatSTDBYoff = 0
@@ -249,8 +256,6 @@ Var 1073, name swbatSTDBYBat, Link IOCARD_SW, Input 12, Type I
 }
 
 Var 0071, static, Value 0
-
-Var 0072, static, Value 0
 
 Var 0073, static, Value 0
 
@@ -278,16 +283,23 @@ Var 0034, name swRightIRUon, static, Value 1
 
 Var 0029, name swCenterIRUon, static, Value 1
 
-Var 0706, name lightsELECTRIC, static
+// Electrical System
+
+Var 706, name lightsELECTRIC, static
 {
-  &ledAPUgen = TESTBIT &lightsELECTRIC ,2
-  &leftBUSoff = TESTBIT &lightsELECTRIC ,8
+  &ledAPUgenOff = TESTBIT &lightsELECTRIC ,3
   &OFFrightGEN = TESTBIT &lightsELECTRIC ,21
 }
 
+Var 776, name lightsELECTon, static
+{
+  &ledAPUgen = TESTBIT &lightsELECTon ,0
+}
+
+
 Var 6706, name ledAPUgen, Link IOCARD_OUT, Output 13
 
-Var 7706, name leftBUSoff, Link IOCARD_OUT, Output 32
+Var 7706, name ledAPUgenOff, Link IOCARD_OUT, Output 32
 
 Var 8706, name OFFrightGEN, Link IOCARD_OUT, Output 32
 
@@ -321,34 +333,44 @@ Var 1075, name swAPUSec, Link IOCARD_SW, Input 6, Type P
   }
 }
 
+Var 0872, name litHYDAULICSon, static
+{
+  &ledhydltON = TESTBIT &litHYDAULICSon ,0
+  &ledhydcn1ON = TESTBIT &litHYDAULICSon ,1
+  &ledhydcn2ON = TESTBIT &litHYDAULICSon ,2
+  &ledhydrtON = TESTBIT &litHYDAULICSon ,3
+}
+
 Var 0703, name lightHYDAULICS, static
 {
   &ledhydPRESSlt = TESTBIT &lightHYDAULICS ,6
   &ledhydPRESSrt = TESTBIT &lightHYDAULICS ,9
-  &ledhydON = TESTBIT &lightHYDAULICS ,14
 }
 
 Var 6703, name ledhydPRESSlt, Link IOCARD_OUT, Output 31
 
 Var 8703, name ledhydPRESSrt, Link IOCARD_OUT, Output 31
 
-Var 7703, name ledhydON, Link IOCARD_OUT, Output 16
+Var 6872, name ledhydltON, Link IOCARD_OUT, Output 16
+Var 7872, name ledhydcn1ON, Link IOCARD_OUT, Output 16
+Var 8872, name ledhydcn2ON, Link IOCARD_OUT, Output 16
+Var 9872, name ledhydrtON, Link IOCARD_OUT, Output 16
 
-Var 0053, name swlftDemPUMPof, static, Value 0
+Var 0053, name swlftDemPUMPof, static, Value 1
 
-Var 0054, name swlftDemPUMPau, static, Value 1
+Var 0054, name swlftDemPUMPau, static, Value 0
 
 Var 0055, name swlftDemPUMPOn, static, Value 0
 
-Var 0061, name swrgtDemPUMPof, static, Value 0
+Var 0061, name swrgtDemPUMPof, static, Value 1
 
-Var 0062, name swrgtDemPUMPau, static, Value 1
+Var 0062, name swrgtDemPUMPau, static, Value 0
 
 Var 0063, name swrgtDemPUMPOn, static, Value 0
 
-Var 0057, name swcntDemPUMPof, static, Value 0
+Var 0057, name swcntDemPUMPof, static, Value 1
 
-Var 0058, name swcntDemPUMPau, static, Value 1
+Var 0058, name swcntDemPUMPau, static, Value 0
 
 Var 0059, name swcntDemPUMPOn, static, Value 0
 
@@ -387,7 +409,10 @@ Var 1076, name fnBefStartEng, Link IOCARD_SW, Input 3, Type P
     &swLElectPump1 = 1    
     &swLElectPump2 = 1    
     &swRgtHYDPump = 1    
-    &swLftHYDPump = 1    
+    &swLftHYDPump = 1
+    &swlftDemPUMPau = 1
+    &swrgtDemPUMPau = 1
+    &swcntDemPUMPau = 1
   }
   ELSE
   {
@@ -398,9 +423,13 @@ Var 1076, name fnBefStartEng, Link IOCARD_SW, Input 3, Type P
   }
 }
 
-Var 0715, name lightPUMP, static
+Var 893, name lightPUMPon, static
 {
-  &ledPUMP = TESTBIT &lightPUMP ,6
+  &ledPUMP = TESTBIT &lightPUMPon ,0
+}
+
+Var 715, name lightPUMP, static
+{
   &ledPUMPpress = TESTBIT &lightPUMP ,2
 }
 
